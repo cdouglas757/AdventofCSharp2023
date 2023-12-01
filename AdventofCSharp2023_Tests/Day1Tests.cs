@@ -9,10 +9,29 @@ namespace AdventofCSharp2023_Tests
         {
         }
 
+
         [Test]
-        public void Test1()
+        public void SampleTest()
         {
-            Assert.That(Day1.SumOfCalibrationValues(new List<string>()), Is.EqualTo(-1));
+            var input = new List<string>()
+            {
+                "1abc2",
+                "pqr3stu8vwx",
+                "a1b2c3d4e5f",
+                "treb7uchet"
+            };
+            Assert.That(Day1.SumOfCalibrationValues(input), Is.EqualTo(142));
+        }
+
+        [Test]
+        public void Day1InputTest()
+        {
+            var path = Path.Combine(TestContext.CurrentContext.TestDirectory, "TestData", "Day1", "Day1Input.txt");
+            var input = File.ReadLines(path).ToList();
+
+            var answer = Day1.SumOfCalibrationValues(input);
+
+            Assert.True(true);
         }
     }
 }

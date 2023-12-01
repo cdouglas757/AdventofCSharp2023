@@ -21,4 +21,14 @@
     <ProjectReference Include="..\AdventofCSharp2023\AdventofCSharp2023.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="TestData\Day1\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="TestData\Day1\Day1Input.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
