@@ -5,6 +5,8 @@ VisualStudioVersion = 17.8.34322.80
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventofCSharp2023", "AdventofCSharp2023\AdventofCSharp2023.csproj", "{D73AB34A-AEA9-4FA3-A441-296ABAA4E3EF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventofCSharp2023_Tests", "AdventofCSharp2023_Tests\AdventofCSharp2023_Tests.csproj", "{5C77B704-F551-4D1A-A1A7-1679B1E4703A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{D73AB34A-AEA9-4FA3-A441-296ABAA4E3EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D73AB34A-AEA9-4FA3-A441-296ABAA4E3EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D73AB34A-AEA9-4FA3-A441-296ABAA4E3EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C77B704-F551-4D1A-A1A7-1679B1E4703A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C77B704-F551-4D1A-A1A7-1679B1E4703A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C77B704-F551-4D1A-A1A7-1679B1E4703A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C77B704-F551-4D1A-A1A7-1679B1E4703A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
