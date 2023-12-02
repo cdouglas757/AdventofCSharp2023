@@ -4,12 +4,6 @@ namespace AdventofCSharp2023_Tests
 {
     public class Day1Tests
     {
-        [SetUp]
-        public void Setup()
-        {
-        }
-
-
         [Test]
         public void SampleTest_DigitsOnly()
         {

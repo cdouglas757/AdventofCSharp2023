@@ -23,10 +23,14 @@
 
   <ItemGroup>
     <Folder Include="TestData\Day1\" />
+    <Folder Include="TestData\Day2\" />
   </ItemGroup>
 
   <ItemGroup>
     <None Update="TestData\Day1\Day1Input.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\Day2\Day2Input.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
