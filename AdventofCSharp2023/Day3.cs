@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Runtime.CompilerServices;
 
 namespace AdventofCSharp_2023
 {
@@ -89,74 +90,28 @@ namespace AdventofCSharp_2023
         {
             var ret = new List<int>();
 
-            if (lineIdx != 0)
+            var directions = new List<Tuple<int, int>>()
             {
-                //check up
-                if (Char.IsNumber(lines[lineIdx - 1][charIdx]))
-                {
-                    ret.Add(GetFullNumber(lines, lineIdx - 1, charIdx));
-                }
+                new Tuple<int, int>(-1, 0),
+                new Tuple<int, int>(-1, -1),
+                new Tuple<int, int>(-1, 1),
+                new Tuple<int, int>(0, -1),
+                new Tuple<int, int>(0, 1),
+                new Tuple<int, int>(11, 0),
+                new Tuple<int, int>(1, -1),
+                new Tuple<int, int>(1, 1),
+            };
 
-                //up left
-                if (charIdx != 0)
-                {
-                    if (Char.IsNumber(lines[lineIdx - 1][charIdx - 1]))
-                    {
-                        ret.Add(GetFullNumber(lines, lineIdx - 1, charIdx - 1));
-                    }
-                }
-
-                //up right
-                if (charIdx != lines[0].Length - 1)
-                {
-                    if (Char.IsNumber(lines[lineIdx - 1][charIdx + 1]))
-                    {
-                        ret.Add(GetFullNumber(lines, lineIdx - 1, charIdx + 1));
-                    }
-                }
-            }
-
-            //left
-            if (charIdx != 0)
+            foreach(var direction in directions)
             {
-                if (Char.IsNumber(lines[lineIdx][charIdx - 1]))
-                {
-                    ret.Add(GetFullNumber(lines, lineIdx, charIdx - 1));
-                }
-            }
+                var lidx = lineIdx + direction.Item1;
+                var cidx = charIdx + direction.Item2;
 
-            //right
-            if (charIdx != lines[0].Length - 1)
-            {
-                if (Char.IsNumber(lines[lineIdx][charIdx + 1]))
+                if(lidx >= 0 && lidx < lines.Length && cidx >= 0 && cidx < lines[lidx].Length)
                 {
-                    ret.Add(GetFullNumber(lines, lineIdx, charIdx + 1));
-                }
-            }
-
-            if (lineIdx != lines.Length - 1)
-            {
-                //check down
-                if (Char.IsNumber(lines[lineIdx + 1][charIdx]))
-                {
-                    ret.Add(GetFullNumber(lines, lineIdx + 1, charIdx));
-                }
-
-                //down left
-                if (charIdx != 0)
-                {
-                    if (Char.IsNumber(lines[lineIdx + 1][charIdx - 1]))
+                    if (Char.IsNumber(lines[lidx][cidx]))
                     {
-                        ret.Add(GetFullNumber(lines, lineIdx + 1, charIdx - 1));
-                    }
-                }
-
-                //down right
-                if (charIdx != lines[0].Length - 1)
-                {
-                    if (Char.IsNumber(lines[lineIdx + 1][charIdx + 1]))
-                    {
-                        ret.Add(GetFullNumber(lines, lineIdx + 1, charIdx + 1));
+                        ret.Add(GetFullNumber(lines, lidx, cidx));
                     }
                 }
             }
