@@ -97,7 +97,7 @@ namespace AdventofCSharp_2023
                 new Tuple<int, int>(-1, 1),
                 new Tuple<int, int>(0, -1),
                 new Tuple<int, int>(0, 1),
-                new Tuple<int, int>(11, 0),
+                new Tuple<int, int>(1, 0),
                 new Tuple<int, int>(1, -1),
                 new Tuple<int, int>(1, 1),
             };
