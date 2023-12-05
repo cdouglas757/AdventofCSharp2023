@@ -213,6 +213,92 @@ namespace AdventofCSharp_2023
             return closestLocation;
         }
 
+        public static long ClosestSeedLocationWithSeedRangeV2(List<string> almanac)
+        {
+            var seeds = almanac.First().Split(':').Last().Trim().Split(" ").Select(i => long.Parse(i)).ToList();
+            var seedRanges = new List<Tuple<long, long>>();
+
+            for (int i = 0; i < seeds.Count; i += 2)
+            {
+                seedRanges.Add(new Tuple<long, long>(seeds[i], seeds[i + 1]));
+            }
+
+            int currentLine = 3;
+
+            //Extract Seed to soil map
+            List<MapInfo> seedToSoilMap = GetMapInfo(almanac, currentLine, out currentLine);
+
+            currentLine += 2;
+            //Extract soil to fertilizer map
+            List<MapInfo> soilToFertilizerMap = GetMapInfo(almanac, currentLine, out currentLine);
+
+            currentLine += 2;
+            //Extract fertilizer to water map
+            List<MapInfo> fertilizerToWaterMap = GetMapInfo(almanac, currentLine, out currentLine);
+
+            currentLine += 2;
+            //Extract water to light map
+            List<MapInfo> waterToLightMap = GetMapInfo(almanac, currentLine, out currentLine);
+
+            currentLine += 2;
+            //Extract light to temperature map
+            List<MapInfo> lightToTemperature = GetMapInfo(almanac, currentLine, out currentLine);
+
+            currentLine += 2;
+            //Extract temperature to humidity map
+            List<MapInfo> temperatureToHumidity = GetMapInfo(almanac, currentLine, out currentLine);
+
+            currentLine += 2;
+            //Extract humidity to location map
+            List<MapInfo> humidityToLocation = GetMapInfo(almanac, currentLine, out currentLine);
+
+            var closestLocation = long.MaxValue;
+            foreach (var seedRange in seedRanges)
+            {
+                var soilId = FindIdWithRange(seedToSoilMap, seedRange);
+                var fertilizerId = FindIdWithRange(soilToFertilizerMap, soilId);
+                var waterId = FindIdWithRange(fertilizerToWaterMap, fertilizerId);
+                var lightId = FindIdWithRange(waterToLightMap, waterId);
+                var tempId = FindIdWithRange(lightToTemperature, lightId);
+                var humidityId = FindIdWithRange(temperatureToHumidity, tempId);
+                var locationId = FindIdWithRange(humidityToLocation, humidityId);
+                //List<Tuple<long, long>> fertilizerIds = new List<Tuple<long, long>>();
+                //foreach(var id in soilIds)
+                //{
+                //    fertilizerIds.AddRange(FindIdWithRange(soilToFertilizer, id));
+                //}
+                //List<Tuple<long, long>> waterIds = new List<Tuple<long, long>>();
+                //foreach (var id in fertilizerIds)
+                //{
+                //    waterIds.AddRange(FindIdWithRange(fertilizerToWaterMap, id));
+                //}
+                //List<Tuple<long, long>> lightIds = new List<Tuple<long, long>>();
+                //foreach (var id in waterIds)
+                //{
+                //    lightIds.AddRange(FindIdWithRange(waterToLightMap, id));
+                //}
+                //List<Tuple<long, long>> tempIds = new List<Tuple<long, long>>();
+                //foreach (var id in lightIds)
+                //{
+                //    tempIds.AddRange(FindIdWithRange(lightToTemperature, id));
+                //}
+                //List<Tuple<long, long>> humidityIds = new List<Tuple<long, long>>();
+                //foreach (var id in tempIds)
+                //{
+                //    humidityIds.AddRange(FindIdWithRange(temperatureToHumidity, id));
+                //}
+                //List<Tuple<long, long>> locationIds = new List<Tuple<long, long>>();
+                //foreach (var id in humidityIds)
+                //{
+                //    locationIds.AddRange(FindIdWithRange(humidityToLocation, id));
+                //}
+
+                closestLocation = Math.Min(closestLocation, locationId.Item1);
+            }
+
+            return closestLocation;
+        }
+
         private static List<Tuple<long, long>> GetMapRanges(List<MapInfo> mapInfoList, List<Tuple<long, long>>? previousMap)
         {
             mapInfoList = mapInfoList.OrderBy(mi => mi.DestinationStart).ToList();
@@ -306,35 +392,37 @@ namespace AdventofCSharp_2023
             return ranges;
         }
 
-        //private static List<Tuple<long, long>> FindIdWithRange(List<MapInfo> mapInfo, Tuple<long, long> range)
-        //{
-        //    var ret = new List<Tuple<long, long>>();
-        //    foreach (var map in mapInfo)
-        //    {
-        //        if (range.Item1 >= map.SourceStart)
-        //        {
-        //            if(range.Item1 <= (map.SourceStart + map.Length))
-        //            {
-        //                ret.Add(new Tuple<long, long>(map.sou, range.Item2));
-        //            }
-        //            seedsInLowestRange.Add(seedRange.Item1);
-        //        }
-        //        else if (seedRange.Item1 <= range.Item1 && seedRange.Item2 >= range.Item1)
-        //        {
-        //            seedsInLowestRange.Add(range.Item1);
-        //        }
-        //        if (previousId >= map.SourceStart)
-        //        {
-        //            if (previousId < map.SourceStart + map.Length)
-        //            {
-        //                ret = map.DestinationStart + (previousId - map.SourceStart);
-        //            }
-        //        }
-        //        else break;
-        //    }
+        private static Tuple<long, long> FindIdWithRange(List<MapInfo> mapInfo, Tuple<long, long> range)
+        {
+            mapInfo = mapInfo.OrderBy(mi => mi.DestinationStart).ToList();
+            var ret = new List<Tuple<long, long>>();
+            var value = range.Item1;
+            var length = range.Item2;
+            foreach (var map in mapInfo)
+            {
+                if (value >= map.SourceStart)
+                {
+                    if (value > map.SourceStart + map.Length)
+                        continue;
 
-        //    return ret;
-        //}
+                    if (value + length <= (map.SourceStart + map.Length))
+                    {
+                        var distance = value - map.SourceStart;
+                        return new Tuple<long, long>(map.DestinationStart + distance, length);
+                    }
+                    else
+                    {
+                        return new Tuple<long, long>(map.SourceStart, map.Length);
+                    }
+                }
+                else if (value + length >= map.SourceStart && value + length < map.SourceStart + map.Length)
+                {
+                    var newLength = Math.Min(length - (map.SourceStart - value), map.Length);
+                    return new Tuple<long, long>(map.DestinationStart, newLength);
+                }
+            }
+            return new Tuple<long, long>(value, length);
+        }
 
         private static long FindId(List<MapInfo> mapInfo, long previousId)
         {

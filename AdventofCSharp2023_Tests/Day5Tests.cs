@@ -50,6 +50,17 @@ namespace AdventofCSharp2023_Tests
         }
 
         [Test]
+        public void Day5SampleInputPart2V2()
+        {
+            var path = Path.Combine(TestContext.CurrentContext.TestDirectory, "TestData", "Day5", "SampleInput.txt");
+            var input = File.ReadLines(path).ToList();
+
+            var ret = Day5.ClosestSeedLocationWithSeedRangeV2(input);
+
+            Assert.That(ret, Is.EqualTo(46));
+        }
+
+        [Test]
         public void Day5InputTestPart2()
         {
             var path = Path.Combine(TestContext.CurrentContext.TestDirectory, "TestData", "Day5", "Day5Input.txt");
