@@ -26,6 +26,7 @@
     <Folder Include="TestData\Day2\" />
     <Folder Include="TestData\Day3\" />
     <Folder Include="TestData\Day4\" />
+    <Folder Include="TestData\Day5\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -39,6 +40,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="TestData\Day4\Day4Input.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\Day5\Day5Input.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\Day5\SampleInput.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
