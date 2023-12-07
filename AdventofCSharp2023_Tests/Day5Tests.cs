@@ -28,9 +28,9 @@ namespace AdventofCSharp2023_Tests
         }
 
         [Test]
-        public void Day5SampleInputV2()
+        public void Day7SampleInput()
         {
-            var path = Path.Combine(TestContext.CurrentContext.TestDirectory, "TestData", "Day5", "SampleInput.txt");
+            var path = Path.Combine(TestContext.CurrentContext.TestDirectory, "TestData", "Day7", "SampleInput.txt");
             var input = File.ReadLines(path).ToList();
 
             var ret = Day5.ClosestSeedLocationV2(input);
