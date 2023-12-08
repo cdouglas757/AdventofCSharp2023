@@ -36,7 +36,7 @@ namespace AdventofCSharp_2023
             return stepsTaken;
         }
 
-        public static int NumberOfStepsToGhostExit(List<string> steps)
+        public static long NumberOfStepsToGhostExit(List<string> steps)
         {
             Dictionary<string, Node> directions = CreateNodes(steps);
             var stepDirections = steps[0].ToArray();
@@ -44,16 +44,23 @@ namespace AdventofCSharp_2023
             var currentSteps = directions.Where(s => s.Key.EndsWith('A')).Select(s => s.Value).ToList();
             int stepIdx = 0;
             var stepsTaken = 0;
+            var stepsList = new List<long>();
 
-            while (currentSteps.Count() > 0 && currentSteps.Any(s => !s.Value.EndsWith('Z')))
+            while (currentSteps.Count() > 0)
             {
                 stepsTaken++;
                 if (stepDirections[stepIdx] == 'R')
                 {
                     List<Node> nextSteps = new List<Node>();
-                    foreach(var step in currentSteps)
+                    foreach (var step in currentSteps)
                     {
-                        nextSteps.Add(step.Right);
+                        if (step.Right.Value.EndsWith('Z'))
+                        {
+                            stepsList.Add(stepsTaken);
+                        } else
+                        {
+                            nextSteps.Add(step.Right);
+                        }
                     }
 
                     currentSteps = nextSteps;
@@ -63,7 +70,14 @@ namespace AdventofCSharp_2023
                     List<Node> nextSteps = new List<Node>();
                     foreach (var step in currentSteps)
                     {
-                        nextSteps.Add(step.Left);
+                        if (step.Left.Value.EndsWith('Z'))
+                        {
+                            stepsList.Add(stepsTaken);
+                        }
+                        else
+                        {
+                            nextSteps.Add(step.Left);
+                        }
                     }
 
                     currentSteps = nextSteps;
@@ -77,7 +91,25 @@ namespace AdventofCSharp_2023
                 }
             }
 
-            return stepsTaken;
+            return LCM(stepsList.Order().ToList());
+
+        }
+
+        private static long GCD(long n1, long n2)
+        {
+            if (n2 == 0)
+            {
+                return n1;
+            }
+            else
+            {
+                return GCD(n2, n1 % n2);
+            }
+        }
+
+        private static long LCM(List<long> numbers)
+        {
+            return numbers.Aggregate((S, val) => S * val / GCD(S, val));
         }
 
         private static Dictionary<string, Node> CreateNodes(List<string> steps)
